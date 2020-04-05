@@ -31,10 +31,8 @@ class ViewController: UIViewController {
         
         if  userGotItRight {
             sender.backgroundColor = UIColor.green
-            quizBrain.updateScore(correct: true)
         } else {
             sender.backgroundColor = UIColor.red
-            quizBrain.updateScore(correct: false)
         }
         
         quizBrain.nextQuestion()
