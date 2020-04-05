@@ -9,18 +9,26 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
+     var timer = Timer()
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var trueButton: UIButton!
     @IBOutlet weak var falseButton: UIButton!
     
     let quiz = [
-        Question(text: "Critical Role is a DnD Podcast", answer: "True"),
-        Question(text: "Travis has played both a Barbaian and a Warlock", answer: "True"),
-        Question(text: "Alura is the Queen we all want", answer: "True"),
+        Question(q: "A slug's blood is green.", a: "True"),
+        Question(q: "Approximately one quarter of human bones are in the feet.", a: "True"),
+        Question(q: "The total surface area of two human lungs is approximately 70 square metres.", a: "True"),
+        Question(q: "In West Virginia, USA, if you accidentally hit an animal with your car, you are free to take it home to eat.", a: "True"),
+        Question(q: "In London, UK, if you happen to die in the House of Parliament, you are technically entitled to a state funeral, because the building is considered too sacred a place.", a: "False"),
+        Question(q: "It is illegal to pee in the Ocean in Portugal.", a: "True"),
+        Question(q: "You can lead a cow down stairs but not up stairs.", a: "False"),
+        Question(q: "Google was originally called 'Backrub'.", a: "True"),
+        Question(q: "Buzz Aldrin's mother's maiden name was 'Moon'.", a: "True"),
+        Question(q: "The loudest sound produced by any animal is 188 decibels. That animal is the African Elephant.", a: "False"),
+        Question(q: "No piece of square dry paper can be folded in half more than 7 times.", a: "False"),
+        Question(q: "Chocolate affects a dog's heart and nervous system; a few ounces are enough to kill a small dog.", a: "True")
     ]
-    
     
     var questionNumber = 0
     override func viewDidLoad() {
@@ -32,21 +40,32 @@ class ViewController: UIViewController {
     @IBAction func answerButtonPressed(_ sender: UIButton) {
         let userAnswer = sender.currentTitle
         // gets the question object at the position of questionNumber and then the answer property
-        userAnswer == quiz[questionNumber].answer ? print("Correct") : print("InCorrect")
+        if userAnswer == quiz[questionNumber].answer {
+            sender.backgroundColor = UIColor.green
+        } else {
+            sender.backgroundColor = UIColor.red
+        }
+        
         
         if questionNumber == (quiz.count - 1) {
             questionNumber = 0
         } else {
             questionNumber += 1
         }
+        // Beacuse it only runs once, we are not assigning it to a variable that we could then invalidate
+        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateUi), userInfo: nil, repeats: false)
         
-        //questionNumber == quiz.count ? questionNumber = 0 : questionNumber += 1
-        //questionNumber += 1
-        updateUi()
     }
     
-    func updateUi(){
+    @objc func updateUi(){
         questionLabel.text = quiz[questionNumber].text
+        trueButton.backgroundColor = UIColor.clear
+        falseButton.backgroundColor = UIColor.clear
+        
+        let questionsTotal = quiz.count
+        print(questionNumber)
+        print(questionsTotal)
+        progressBar.progress = Float(questionNumber) / Float(questionsTotal)
     }
     
 }
