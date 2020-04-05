@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var trueButton: UIButton!
     @IBOutlet weak var falseButton: UIButton!
+    @IBOutlet weak var scoreLabel: UILabel!
     
     var quizBrain = QuizBrain()
     
@@ -30,17 +31,14 @@ class ViewController: UIViewController {
         
         if  userGotItRight {
             sender.backgroundColor = UIColor.green
+            quizBrain.updateScore(correct: true)
         } else {
             sender.backgroundColor = UIColor.red
+            quizBrain.updateScore(correct: false)
         }
         
         quizBrain.nextQuestion()
-//
-//        if questionNumber == (quiz.count - 1) {
-//            questionNumber = 0
-//        } else {
-//            questionNumber += 1
-//        }
+
         // Beacuse it only runs once, we are not assigning it to a variable that we could then invalidate
         Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateUi), userInfo: nil, repeats: false)
         
@@ -51,6 +49,7 @@ class ViewController: UIViewController {
         trueButton.backgroundColor = UIColor.clear
         falseButton.backgroundColor = UIColor.clear
         progressBar.progress = quizBrain.getProgress()
+        scoreLabel.text = "Score: \(quizBrain.score)"
     }
     
 }
