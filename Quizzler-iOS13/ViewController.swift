@@ -16,10 +16,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var falseButton: UIButton!
     
     let quiz = [
-        ["Critical Role is a DnD Podcast", "True"],
-        ["Travis has played both a Barbaian and a Warlock", "True"],
-        ["Alura is the Queen we all want", "True"]
+        Question(text: "Critical Role is a DnD Podcast", answer: "True"),
+        Question(text: "Travis has played both a Barbaian and a Warlock", answer: "True"),
+        Question(text: "Alura is the Queen we all want", answer: "True"),
     ]
+    
+    
     var questionNumber = 0
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +31,8 @@ class ViewController: UIViewController {
     
     @IBAction func answerButtonPressed(_ sender: UIButton) {
         let userAnswer = sender.currentTitle
-        
-        userAnswer == quiz[questionNumber][1] ? print("correct") : print("InCorrect")
+        // gets the question object at the position of questionNumber and then the answer property
+        userAnswer == quiz[questionNumber].answer ? print("Correct") : print("InCorrect")
         
         if questionNumber == (quiz.count - 1) {
             questionNumber = 0
@@ -44,7 +46,7 @@ class ViewController: UIViewController {
     }
     
     func updateUi(){
-        questionLabel.text = quiz[questionNumber][0]
+        questionLabel.text = quiz[questionNumber].text
     }
     
 }
